@@ -1,118 +1,135 @@
+
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
-    <!-- Custom PreHead code is injected here -->
-    
+<head>
+    <meta charset="UTF-8">
 
-    <head>
-        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <meta name="apple-mobile-web-app-capable" content="yes" />
-        <meta name ="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
-        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-        <meta charset="utf-8"/>
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0,
+          maximum-scale=1.0, user-scalable=no,
+          viewport-fit=cover">
 
-        <!-- Builtin injector for disabling cache -->
-        <meta http-equiv="pragma" content="no-cache"/>
+    <meta name="apple-mobile-web-app-capable"
+          content="yes">
 
-        <!-- Set the title bar of the page -->
-        <title>five nights at richard</title>
+    <title>Five Nights at Richard</title>
 
-        <!-- Custom PreStyle code is injected here -->
-        
+    <style>
+        html, body {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background: black;
+        }
 
-        <!-- Set the background colour of the document -->
-        <style>
+        /* CONTENEDOR DEL JUEGO */
 
-/* FIVE NIGHTS AT RICHARD */
-/* PANTALLA ADAPTABLE */
+        #gm4html5_div_id {
+            position: absolute !important;
 
-html, body {
-    width: 100%;
-    height: 100%;
-    margin: 0;
-    padding: 0;
-    background: #000 !important;
-    overflow: hidden;
-}
+            left: 50% !important;
+            top: 50% !important;
 
-#gm4html5_div_id {
-    position: fixed;
-    inset: 0;
-    width: 100vw;
-    height: 100dvh;
+            width: 1366px !important;
+            height: 768px !important;
 
-    display: flex;
-    justify-content: center;
-    align-items: center;
+            margin: 0 !important;
+            padding: 0 !important;
 
-    background: #000;
-}
+            transform-origin: center center !important;
 
-#canvas {
-    display: block;
-    position: static !important;
+            transform:
+                translate(-50%, -50%)
+                scale(var(--escala, 1))
+                !important;
+        }
 
-    width: min(100vw, 177.865dvh) !important;
-    height: auto !important;
+        /* CANVAS ORIGINAL DE GAMEMAKER */
 
-    max-height: 100dvh;
-    aspect-ratio: 1366 / 768;
+        #canvas {
+            display: block !important;
+            position: relative !important;
 
-    margin: 0 !important;
-}
+            left: 0 !important;
+            top: 0 !important;
 
-        </style>
+            width: 1366px !important;
+            height: 768px !important;
 
-        <!-- Custom PostStyle code is injected here -->
-        
+            margin: 0 !important;
+            padding: 0 !important;
+        }
+    </style>
 
-        <!-- Builtin injector for injecting flurry analytics code -->
-        
-    </head>
+    <script>
+        function ajustarJuego() {
 
-    <!-- Custom PostHead code is injected here -->
-    
+            const ancho = window.innerWidth;
+            const alto = window.innerHeight;
 
-    <!-- Custom PreBody code is injected here -->
-    
+            // Mantener proporciones 1366 x 768
+            const escala = Math.min(
+                ancho / 1366,
+                alto / 768
+            );
 
-    <body>
-        <!-- Custom BodyStart code is injected here -->
-        
+            document.documentElement.style.setProperty(
+                "--escala",
+                escala
+            );
+        }
 
-        <div class="gm4html5_div_class" id="gm4html5_div_id">
-            
-            <!-- Builtin injector for splash screen -->
-            
+        window.addEventListener(
+            "resize",
+            ajustarJuego
+        );
 
-            <!-- Custom PreCanvas code is injected here -->
-            
+        window.addEventListener(
+            "orientationchange",
+            function () {
+                setTimeout(ajustarJuego, 150);
+            }
+        );
 
-            <!-- Create the canvas element the game draws to -->
-            <canvas id="canvas" width="1366" height="768" >
-                
-                <p>Your browser doesn't support HTML5 canvas.</p>
-            </canvas>
-            
-            <!-- Custom PostCanvas code is injected here -->
-            
-        </div>
+        document.addEventListener(
+            "DOMContentLoaded",
+            ajustarJuego
+        );
+    </script>
 
-        <!-- Run the game code -->
-        <script type="text/javascript" src="html5game/five nights at richard.js?cachebust=1825028753"></script>
+</head>
 
-        <!-- Builtin injector for injecting runner path -->
-        
+<body>
 
-        <script>window.onload = GameMaker_Init;</script>
+    <div class="gm4html5_div_class"
+         id="gm4html5_div_id">
 
-        <!-- Builtin injector for injecting google analytics code -->
-        
+        <canvas id="canvas"
+                width="1366"
+                height="768">
+        </canvas>
 
-        <!-- Custom BodyEnd code is injected here -->
-        
-    </body>
+    </div>
 
-    <!-- Custom PostBody code is injected here -->
-    
+    <!-- ARCHIVO ORIGINAL DEL JUEGO -->
+
+    <script
+        src="html5game/five nights at richard.js?cachebust=1825028753">
+    </script>
+
+    <script>
+        window.onload = function () {
+
+            ajustarJuego();
+
+            GameMaker_Init();
+
+            ajustarJuego();
+        };
+    </script>
+
+</body>
 </html>
